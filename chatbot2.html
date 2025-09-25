@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Simple Chatbot</title>
+  <style>
+    #chatbox {
+      width: 100%;
+      height: 300px;
+      border: 1px solid #ccc;
+      padding: 10px;
+      overflow-y: auto;
+      font-family: sans-serif;
+    }
+    .user { color: blue; }
+    .bot { color: green; }
+    input, button {
+      padding: 10px;
+      margin-top: 10px;
+      width: 70%;
+    }
+    button {
+      width: 25%;
+    }
+  </style>
+</head>
+<body>
+  <h3>Chat with us!</h3>
+  <div id="chatbox"></div>
+  <input id="userInput" placeholder="Type your message..." />
+  <button onclick="sendMessage()">Send</button>
+
+  <script>
+    function sendMessage() {
+      const input = document.getElementById('userInput');
+      const message = input.value;
+      if (!message) return;
+      addMessage('user', message);
+      input.value = '';
+      respond(message);
+    }
+
+    function addMessage(sender, text) {
+      const chat = document.getElementById('chatbox');
+      const msg = document.createElement('div');
+      msg.className = sender;
+      msg.innerText = (sender === 'user' ? "You: " : "Bot: ") + text;
+      chat.appendChild(msg);
+      chat.scrollTop = chat.scrollHeight;
+    }
+
+    function respond(message) {
+      let response = "Sorry, I don't understand.";
+      if (message.toLowerCase().includes("hello")) response = "Hi there!";
+      else if (message.toLowerCase().includes("hours")) response = "We're open 9am–5pm, Mon–Fri.";
+      else if (message.toLowerCase().includes("help")) response = "Sure, how can I assist you today?";
+      setTimeout(() => addMessage('bot', response), 500);
+    }
+  </script>
+</body>
+</html>
